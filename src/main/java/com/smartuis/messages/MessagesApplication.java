@@ -22,6 +22,7 @@ import com.smartuis.messages.service.DeviceMessageMqttService;
 public class MessagesApplication {
 
     private String brokerIp = "tcp://"+System.getenv("BROKER_IP")+":1883";
+    //private String brokerIp = "tcp://localhost:1883";
     private String clientId = "serviceMessageClient";
     private String topic = "device-messages";
 

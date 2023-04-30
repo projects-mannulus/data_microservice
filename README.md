@@ -12,10 +12,11 @@ Dependencias:
 - Spring Web
 - MQTT integration. 
 - Gson
+- Lombok
 
 El proyecto cuenta con los siguientes directorios internos: 
 
-- **CONFIG**: Directorio para los archivos de configuración del microservico como el archivo de configuración de CORS.
+- **CONFIG**: Directorio para los archivos de configuración del microservico como el archivo de configuración de CORS y el SaggerConfig.
 
 - **Controller**: Para los controladores de las HTTP Request.
 
@@ -34,4 +35,8 @@ Este servicio está diseñado para ejecutarse en un contenedor donde existen las
 - **BROKER_IP**: IP Broker MQTT. 
 
 Para agregar variables adionales se debe modificar el application.yml y para MQTT revisar MessagesApplication.java.
+
+## API Document. 
+
+Para conocer los EndPoin de la API que expone el microservicio se instalo el paquete de Swagger que permite documenta fácilmente, para acceder se expone por la URL base del servicio + */swagger-ui.html#/*
 

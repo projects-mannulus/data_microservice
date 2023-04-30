@@ -4,5 +4,8 @@ spring:
           database: iot
           port: 27017
           host: ${MONGO_HOST:localhost}
+    mvc:
+        pathmatch:
+          matching-strategy: ant-path-matcher
 server:
   port: 8091
