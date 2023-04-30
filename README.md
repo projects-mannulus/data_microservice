@@ -5,6 +5,7 @@ En este repositorio se encuentra el código fuente del microservicio de almacena
 
 El microservicio está desarrollado en las siguientes tecnologías: 
 
+- Java 11
 - Spring Boot 2.7.11
 Dependencias:
 - Spring Data MongoDB
