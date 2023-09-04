@@ -1,7 +1,9 @@
 package com.smartuis.messages.documents;
 
+import java.util.Date;
 import java.util.Map;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import lombok.Data;
@@ -13,7 +15,7 @@ import lombok.NoArgsConstructor;
 public class DeviceMessage {
 
     /*Identificador del mensaje */
-    public String id;
+    public String _id;
 
     /*Identificador unico del dispositivo */
     public String deviceUUID;
@@ -22,7 +24,8 @@ public class DeviceMessage {
     public String topic;
 
     /*Fecha de Creación del Mensaje */
-    public String timeStamp;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX")
+    public Date timeStamp;
 
     /*Mensaje del dispositivo clave(String) - Valor(String, Int, etc..)*/
     public Map<String, Object> values;

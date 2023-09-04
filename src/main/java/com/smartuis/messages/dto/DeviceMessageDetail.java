@@ -1,6 +1,7 @@
 package com.smartuis.messages.dto;
 
 
+import java.util.Date;
 import java.util.Map;
 
 import com.smartuis.messages.documents.DeviceMessage;
@@ -19,7 +20,7 @@ public class DeviceMessageDetail {
      private String topic;
  
      /*Fecha de Creación del Mensaje */
-     private String timeStamp;
+     private Date timeStamp;
  
      /*Mensaje*/
      private Map<String,Object> values;
@@ -29,14 +30,5 @@ public class DeviceMessageDetail {
      
      /*Indica si el mensaje es una alerta (opcional)*/
      private Boolean alert;
- 
-     public void setEntity(DeviceMessage message){
-         deviceUUID = message.getDeviceUUID();
-         topic = message.getTopic();
-         timeStamp = message.getTimeStamp();
-         values = message.getValues();
-         status = message.getStatus();
-         alert = message.getAlert();
-     }
     
 }

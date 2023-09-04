@@ -1,6 +1,7 @@
 package com.smartuis.messages.service;
 
 
+import com.smartuis.messages.service.interfaces.DeviceMessageMqttService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.Message;
 import org.springframework.stereotype.Service;

@@ -1,4 +1,4 @@
-package com.smartuis.messages.service;
+package com.smartuis.messages.service.interfaces;
 
 import org.springframework.messaging.Message;
 
