@@ -24,7 +24,7 @@ public class DeviceMessage {
     public String topic;
 
     /*Fecha de Creación del Mensaje */
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX")
+    @JsonFormat(shape = JsonFormat.Shape.STRING)
     public Date timeStamp;
 
     /*Mensaje del dispositivo clave(String) - Valor(String, Int, etc..)*/

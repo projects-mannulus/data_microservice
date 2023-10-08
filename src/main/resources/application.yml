@@ -1,11 +1,25 @@
 spring:
-    data:
-        mongodb:
-          database: iot
-          port: 27017
-          host: ${MONGO_HOST:localhost}
-    mvc:
-        pathmatch:
-          matching-strategy: ant-path-matcher
+  data:
+    mongodb:
+      #database uri mongodb
+      uri: ${MONGO_URI:mongodb://localhost:27017/iot}
+#     database: iot
+#     port: 27017
+#     host: ${MONGO_HOST:localhost}
+  mvc:
+    pathmatch:
+      matching-strategy: ant-path-matcher
+  jackson:
+    time-zone: ${TIME-ZONE:America/Bogota}
+    date-format: ${DATE-FORMAT:yyyy-MM-dd'T'HH:mm:ss.SSSXXX}
 server:
+  #port to deploy the application
   port: 8091
+  #url path to deploy the application
+  servlet:
+    context-path: /
+#configuration for the borker mqtt
+broker:
+  uri: ${BROKER_URL:tcp://13.82.121.101:1883}
+  clientId: ${BROKER_CLIENT_ID:serviceMessageClient-2 }
+  topic: ${BROKER_TOPIC:device-messages}
