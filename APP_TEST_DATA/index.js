@@ -1,3 +1,13 @@
+
+const tiposDeTiempo = {
+    millisecond: 1,
+    second: 1000,
+    minute: 60000,
+    hour: 3600000,
+    day: 86400000,
+    week: 604800000,
+};
+
 function println(msg) {
     document.getElementById("messages").innerHTML += "<span class='log'>" + msg + "</span><br>";
 }
@@ -59,7 +69,7 @@ function startDisconnect() {
 
 }
 
-function publishMessage(msg) {
+function publishMessage(msg, deviceid) {
     // msg = document.getElementById("Message").value;
     // const deviceid = document.getElementById("deviceUUID").value;
 
@@ -68,18 +78,20 @@ function publishMessage(msg) {
     Message.destinationName = document.getElementById("topic_s").value;
     MessageUser = new Paho.MQTT.Message(msg);
 
-    MessageUser.destinationName = ("device-" + document.getElementById("deviceUUID").value);
+    deviceid = deviceid ?? document.getElementById("deviceUUID").value;
+
+    MessageUser.destinationName = ("device-" + deviceid);
 
     //se envia el mensaje al backend y al usuario.
     client.send(Message);
     client.send(MessageUser);
-    println("Message to topic " + topic + " is sent");
+    println("[PUBLISH]: Message to topic " + Message.destinationName + " is sent");
+    println("[PUBLISH]: Message to topic " + MessageUser.destinationName + " is sent");
 }
 
 let tiempoInicial;
 
 function generarRegistro(keys, min, max, deviceid) {
-    console.log(tiempoInicial, window.tiempoInicial)
     if (deviceid === undefined) {
         deviceid = document.getElementById("deviceUUID").value;
     }
@@ -115,23 +127,32 @@ async function generateData(type) {
     const count = Number(document.getElementById("count").value);
     //tiempo de espera entre cada registro
     const timeout = document.getElementById("intervalo").value;
-
+    //fecha inicial
     const fechaDesde = document.getElementById("fechaDesde").value;
     tiempoInicial = moment(fechaDesde) ?? moment();
+
+    //tiempo de sincronizacion (para enviar los datos segun el cada cuanto tiempo se envian y no todos de una vez)
+    const syncTime = document.getElementById("syncTime").value === 'on';
+    console.log(syncTime)
+    //valida que se haya ingresado datos en los campos
     if (count === null || timeout === null) {
         println("Debe llenar los campos");
         return;
     }
-    println("Generando " + count + " registros cada " + timeout + " milisegundos");
+    let timeToSync = tiposDeTiempo[timeout];
+    println("Generando " + count + " registros cada " + timeout + " "+ timeout);
     for (let i = 0; i < count; i++) {
+        if(i>0 && syncTime){
+            await new Promise(resolve => setTimeout(resolve, timeToSync));
+        }
         if (type === "co2") {
-            publishMessage(generarRegistro(["C02 ppm"], 1500, 3000, 1));
+            publishMessage(generarRegistro(["C02 ppm"], 1500, 3000, 1),1);
         } else if (type === "energia") {
-            publishMessage(generarRegistro(["Centic", "CT", "LP"], 600, 1400, 2));
+            publishMessage(generarRegistro(["Centic", "CT", "LP"], 600, 1400, 2),2);
         } else if (type === "temp") {
-            publishMessage(generarRegistro(["Asignadas", "Prestadas", "NO prestadas"], 0, 30, 3));
+            publishMessage(generarRegistro(["Asignadas", "Prestadas", "NO prestadas"], 0, 30, 3),3);
         } else if (type === "ruido") {
-            publishMessage(generarRegistro(["decibeles"], 30, 90, 4));
+            publishMessage(generarRegistro(["decibeles"], 30, 90, 4),4);
         } else{
             publishMessage(generarRegistro());
         }
